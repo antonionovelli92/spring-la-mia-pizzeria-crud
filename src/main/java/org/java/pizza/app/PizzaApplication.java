@@ -40,10 +40,21 @@ public class PizzaApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		Pizza p = new Pizza("Margherita", "Sugo e mozzarella", "www.fotomiapizza.ciro", 10);
+		Pizza p2 = new Pizza("Capricciosa", "Sugo e mozzarella", "www.fotomiapizza.ciro", 10);
+		Pizza p3 = new Pizza("Quattro stagioni", "Sugo e mozzarella", "www.fotomiapizza.ciro", 10);
+		Pizza p4 = new Pizza("Gigi d'alessio", "Napoletana", "www.fotomiapizzawewe.ciro", 10);
 		
 		System.out.println(p);
-		
 		pizzaService.save(p);
+		
+		System.out.println(p2);
+		pizzaService.save(p2);
+		
+		System.out.println(p3);
+		pizzaService.save(p3);
+		
+		System.out.println(p4);
+		pizzaService.save(p4);
 		
 		List<Pizza> pizze = pizzaService.findAll();
 		System.out.println(pizze);
