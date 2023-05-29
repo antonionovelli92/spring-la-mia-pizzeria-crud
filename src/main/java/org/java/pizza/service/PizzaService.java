@@ -34,4 +34,12 @@ public class PizzaService {
     public List<Pizza> findAll() {
         return pizzaRepository.findAll();
     }
+    public List<Pizza> getAllPizzeByNome(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            return pizzaRepository.findAll();
+        } else {
+            return pizzaRepository.findByNomeContainingIgnoreCase(nome);
+        }
+    }
+
 }

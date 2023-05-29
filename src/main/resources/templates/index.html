@@ -9,6 +9,11 @@
 <body>
     <div class="container">
         <h1>Elenco Pizze</h1>
+        <form action="/" method="post">
+            <label for="filtro">Filtra per nome:</label>
+            <input type="text" id="filtro" name="filtro">
+            <button type="submit">Filtra</button>
+        </form>
         <table class="table">
             <thead>
                 <tr>
@@ -31,6 +36,7 @@
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/new}">Crea nuova pizza</a>
     </div>
 </body>
 </html>

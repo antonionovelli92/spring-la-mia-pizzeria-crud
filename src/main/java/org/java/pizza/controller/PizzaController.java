@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PizzaController {
@@ -39,4 +41,26 @@ public class PizzaController {
 		
 		return "pizza";
 	}
+//    Creazione 
+    
+    @GetMapping("/new")
+    public String showCreatePizzaForm(Model model) {
+        model.addAttribute("pizza", new Pizza());
+        return "createPizzaForm"; 
+    }
+    @PostMapping("/create")
+    public String createPizza(Pizza pizza) {
+        pizzaService.save(pizza);
+        return "redirect:/";
+    }
+    
+//    Filtro
+    @PostMapping("/")
+    public String indexWithFilter(Model model, @RequestParam("filtro") String filtro) {
+        List<Pizza> pizze = pizzaService.getAllPizzeByNome(filtro);
+        model.addAttribute("pizze", pizze);
+        model.addAttribute("filtro", filtro);
+        return "index";
+    }
+
 }
