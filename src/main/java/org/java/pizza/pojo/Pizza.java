@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -27,7 +27,7 @@ public class Pizza {
     private String foto;
 
     @NotNull(message = "Il campo Prezzo è obbligatorio")
-    @Positive(message = "Il campo Prezzo deve essere un numero positivo")
+ 
     private double prezzo;
 
     public Pizza() {
