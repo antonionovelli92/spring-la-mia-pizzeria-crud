@@ -3,16 +3,22 @@ package org.java.pizza.controller;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.java.pizza.pojo.Pizza;
 import org.java.pizza.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class PizzaController {
@@ -43,17 +49,31 @@ public class PizzaController {
 		return "pizza";
 	}
 //    Creazione 
-    
     @GetMapping("/new")
     public String showCreatePizzaForm(Model model) {
         model.addAttribute("pizza", new Pizza());
-        return "createPizzaForm"; 
+        return "createPizzaForm";
     }
+
     @PostMapping("/create")
-    public String createPizza(Pizza pizza) {
+    public String createPizza(
+            Model model,
+            @Valid @ModelAttribute("pizza") Pizza pizza,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            for (ObjectError err : bindingResult.getAllErrors()) {
+                System.err.println("error: " + err.getDefaultMessage());
+            }
+            model.addAttribute("pizza", pizza);
+            model.addAttribute("errors", bindingResult);
+            return "createPizzaForm";
+        }
+
         pizzaService.save(pizza);
         return "redirect:/";
     }
+
     
 //    Filtro
     @PostMapping("/")
@@ -74,7 +94,12 @@ public class PizzaController {
     }
 // Update
     @PostMapping("/update/{id}")
-    public String updatePizza(@PathVariable("id") int id, Model model, @ModelAttribute("pizza") Pizza updatedPizza) {
+    public String updatePizza(@PathVariable("id") int id, Model model, @ModelAttribute("pizza") @Validated Pizza updatedPizza, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            //  ci sono errori di validazione return
+            return "editPizzaForm";
+        }
+
         pizzaService.findById(id)
                 .ifPresent(pizza -> {
                     pizza.setNome(updatedPizza.getNome());
@@ -88,7 +113,6 @@ public class PizzaController {
 
         return "redirect:/";
     }
-
 
 
 

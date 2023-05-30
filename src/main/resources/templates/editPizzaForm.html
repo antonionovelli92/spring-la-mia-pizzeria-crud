@@ -12,18 +12,22 @@
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome:</label>
                 <input type="text" id="nome" th:field="*{nome}" class="form-control" required>
+                <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="descrizione" class="form-label">Descrizione:</label>
                 <textarea id="descrizione" th:field="*{descrizione}" class="form-control" required></textarea>
+                <span th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="foto" class="form-label">Foto:</label>
                 <input type="text" id="foto" th:field="*{foto}" class="form-control" required>
+                <span th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="prezzo" class="form-label">Prezzo:</label>
                 <input type="number" id="prezzo" th:field="*{prezzo}" step="0.01" class="form-control" required>
+                <span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Aggiorna</button>
         </form>
